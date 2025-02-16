@@ -15,7 +15,7 @@ class Character:
         self.reset_screen = False
 
         #INSERT DEATH IMAGE IN .LOAD()
-        self.death = pygame.transform.scale(pygame.image.load(), (50, 50))
+        self.death = pygame.transform.scale(pygame.image.load(image_paths["walk"]), (50, 50))
 
         # Load character images
         self.images = {
