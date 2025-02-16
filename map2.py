@@ -3,6 +3,7 @@ import os
 
 from game_logic import switch_block, button_block, pressure_plate_block, fire_block
 
+
 # Initialize Pygame
 pygame.init()
 
