@@ -1,5 +1,7 @@
 import pygame
 
+from audio import play_sound, jump_player1, jump_player2
+
 class Character:
     def __init__(self, x, y, image_paths, controls, screen_width):
         self.speed = 10
@@ -9,8 +11,8 @@ class Character:
         self.facing_right = True
         self.y = y
         self.x = x
-        self.screen_width = screen_width  # Store screen width for wrapping
-        self.wrap_offset = 100  # New: Custom wrap-around offset
+        self.screen_width = screen_width
+        self.reset_screen = False
 
         # Load character images
         self.images = {
@@ -31,13 +33,11 @@ class Character:
         self.on_ground = False
         self.ground_y = y
 
-        # Movement flags
         self.moving_left = False
         self.moving_right = False
-        self.is_jumping = False  # Track if the character is jumping
+        self.is_jumping = False
 
     def handle_event(self, event):
-        """Handles keyboard events"""
         if event.type == pygame.KEYDOWN:
             if event.key == self.controls["left"]:
                 self.moving_left = True
@@ -50,6 +50,10 @@ class Character:
                 self.on_ground = False
                 self.is_jumping = True  # Start jumping
                 self.current_image = self.images["jump"]  # Show jump image immediately
+                if self.controls["up"] == pygame.K_w:
+                    play_sound(jump_player1)
+                elif self.controls["up"] == pygame.K_UP:
+                    play_sound(jump_player2)
 
         elif event.type == pygame.KEYUP:
             if event.key == self.controls["left"]:
@@ -58,20 +62,22 @@ class Character:
                 self.moving_right = False
 
     def move(self):
-        """Handles movement logic"""
 
         # Apply gravity
         self.y_velocity += self.GRAVITY
         self.y += self.y_velocity
+
+        # Define wrapping boundaries
+        left_boundary = 150 - self.width
+        right_boundary = 1050
 
         # Check if character lands on ground
         if self.y >= self.ground_y:
             self.y = self.ground_y
             self.y_velocity = 0
             self.on_ground = True
-            self.is_jumping = False  # End jumping when landing
+            self.is_jumping = False
 
-        # **PRIORITIZE JUMP ANIMATION**
         if self.is_jumping:
             self.current_image = self.images["jump"]
         elif self.moving_left or self.moving_right:
@@ -85,19 +91,27 @@ class Character:
         if self.moving_right:
             self.x += self.speed
 
-        # **Wrap around screen using wrap_offset**
-        if self.x < -self.wrap_offset:  # If too far left, teleport near right side
-            self.x = self.screen_width + self.wrap_offset
-        elif self.x > self.screen_width + self.wrap_offset:  # If too far right, teleport near left side
-            self.x = -self.wrap_offset
+        #Wrapping:
+        if self.x < left_boundary:
+            self.x = right_boundary
+            self.reset_screen = True
+        elif self.x > right_boundary:
+            self.x = left_boundary
+            self.reset_screen = True
 
-        # Update rect position
         self.rect.topleft = (self.x, self.y)
 
     def draw(self, screen):
-        """Draws the character with the current sprite, flipped if necessary"""
         image_to_draw = self.current_image
         if not self.facing_right:
             image_to_draw = pygame.transform.flip(self.current_image, True, False)  # Flip horizontally
 
         screen.blit(image_to_draw, self.rect)
+
+    #CALL THIS TO RETURN ROOM STATUS. IT WILL RETURN TRUE IF It has changed room.
+    def get_level_status (self):
+        return self.reset_screen
+    
+    #CALL THIS TO RESET ROOM STATUS, RIGHT AFTER DOING SO.
+    def reset_screen (self):
+        self.reset_screen = False

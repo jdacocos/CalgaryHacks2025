@@ -1,6 +1,8 @@
-import pygame
+import pygame, os
+
 from character import Character
-import os
+from audio import play_background_music, stop_background_music
+
 
 # Pygame setup
 pygame.init()
@@ -43,7 +45,7 @@ player1 = Character(400, 648, blue_dino, {
     "down": pygame.K_s,
     "left": pygame.K_a,
     "right": pygame.K_d
-}, 800)
+}, SCREEN_WIDTH)
 
 player2 = Character(400, 348, red_dino, {
     "up": pygame.K_UP,
@@ -51,6 +53,8 @@ player2 = Character(400, 348, red_dino, {
     "left": pygame.K_LEFT,
     "right": pygame.K_RIGHT
 }, SCREEN_WIDTH)
+
+play_background_music()
 
 # Game Loop
 while running:
@@ -89,7 +93,7 @@ while running:
     player1.draw(screen)
     player2.draw(screen)
 
-    
+    #ADD THE "COVER" here, like cover for "beyond the walls" so it we dont see "teleport". Just so it goes "over top of character".
 
     # Flip display
     pygame.display.flip()
