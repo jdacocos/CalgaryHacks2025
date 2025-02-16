@@ -12,6 +12,7 @@ pygame.display.set_caption("Pygame Rectangle Map")
 # Colors
 WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
+BLUE = (0, 0, 255)
 
 # Load image with correct path handling
 image_path = os.path.join("assets", "images", "Bricks", "FloorBrick.png")
