@@ -1,6 +1,8 @@
-import pygame
+import pygame, os
+
 from character import Character
-import os
+from audio import play_background_music, stop_background_music, play_sound
+
 
 # Pygame setup
 pygame.init()
@@ -51,6 +53,8 @@ player2 = Character(400, 348, red_dino, {
     "left": pygame.K_LEFT,
     "right": pygame.K_RIGHT
 }, SCREEN_WIDTH)
+
+play_background_music()
 
 # Game Loop
 while running:
