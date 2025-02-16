@@ -33,7 +33,7 @@ fire_image_path = os.path.join("assets", "images", "fire", "widefloorfire1.png")
 if os.path.exists(door1_image_path):
     Door1OG = pygame.image.load(door1_image_path)
     Door1OG = pygame.transform.scale(Door1OG, (20, 60))
-    Door1 = Door1OG
+    Door1 = pygame.transform.flip(Door1OG, False, True)  # Flip the image upside down
 else:
     print(f"Error: Image '{door1_image_path}' not found!")
     Door1 = None
@@ -66,20 +66,21 @@ else:
 
 # Doors (Orange)
 doors = [
-    pygame.Rect(160, 330, 20, 60),
+    pygame.Rect(160, 110, 20, 60),
     pygame.Rect(1020, 110, 20, 60),
     pygame.Rect(160, 630, 20, 60),
-    pygame.Rect(1020, 630, 20, 60),
+    pygame.Rect(1020, 420, 20, 60),
 ]
-# Lever/Button (Green)
-lever_image_path = os.path.join("assets", "images","lever", "lever.png")
-if os.path.exists(lever_image_path):
-    LeverImage = pygame.image.load(lever_image_path)
-    LeverImage = pygame.transform.scale(LeverImage, (40, 30))
+# PressurePlate Green
+pressurePlate_image_path = os.path.join("assets", "images","pressureplate", "pressure_plate_up.png")
+if os.path.exists(pressurePlate_image_path):
+    pressurePlateImage = pygame.image.load(pressurePlate_image_path)
+    pressurePlateImage = pygame.transform.scale(pressurePlateImage, (50, 20))
+    pressurePlateImage = pygame.transform.flip(pressurePlateImage, False, True)
 else:
-    print(f"Error: Image '{lever_image_path}' not found!")
-    LeverImage = None
-lever = pygame.Rect(500, 665, 50, 20)
+    print(f"Error: Image '{pressurePlate_image_path}' not found!")
+    pressurePlateImage = None
+pressurePlate = pygame.Rect(500, 100, 50, 20)
 
 # Load FloorBrick
 if os.path.exists(floor_image_path):
@@ -172,10 +173,10 @@ while running:
         if door.y == 630 and Door1:
             screen.blit(Door1OG, (door.x, door.y))   
 
-    if LeverImage:
-        screen.blit(LeverImage, (lever.x, lever.y))
+    if pressurePlateImage:
+        screen.blit(pressurePlateImage, (pressurePlate.x, pressurePlate.y))
     else:
-        pygame.draw.rect(screen, GREEN, lever)
+        pygame.draw.rect(screen, GREEN, pressurePlate)
  
     pygame.display.flip()  # Update display
 pygame.quit() 
