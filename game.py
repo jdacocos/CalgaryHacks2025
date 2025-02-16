@@ -43,7 +43,7 @@ player1 = Character(400, 648, blue_dino, {
     "down": pygame.K_s,
     "left": pygame.K_a,
     "right": pygame.K_d
-}, 800)
+}, SCREEN_WIDTH)
 
 player2 = Character(400, 348, red_dino, {
     "up": pygame.K_UP,
@@ -89,7 +89,7 @@ while running:
     player1.draw(screen)
     player2.draw(screen)
 
-    
+    #ADD THE "COVER" here, like cover for "beyond the walls" so it we dont see "teleport". Just so it goes "over top of character".
 
     # Flip display
     pygame.display.flip()
