@@ -1,7 +1,7 @@
 import pygame, os
 
 from character import Character
-from audio import play_background_music, stop_background_music, play_sound
+from audio import play_background_music, stop_background_music
 
 
 # Pygame setup

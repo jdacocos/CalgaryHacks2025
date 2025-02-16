@@ -1,5 +1,7 @@
 import pygame
 
+from audio import play_sound, jump_player1, jump_player2
+
 class Character:
     def __init__(self, x, y, image_paths, controls, screen_width):
         self.speed = 10
@@ -48,6 +50,10 @@ class Character:
                 self.on_ground = False
                 self.is_jumping = True  # Start jumping
                 self.current_image = self.images["jump"]  # Show jump image immediately
+                if self.controls["up"] == pygame.K_w:
+                    play_sound(jump_player1)
+                elif self.controls["up"] == pygame.K_UP:
+                    play_sound(jump_player2)
 
         elif event.type == pygame.KEYUP:
             if event.key == self.controls["left"]:

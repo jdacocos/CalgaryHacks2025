@@ -16,6 +16,7 @@ victory_player2 = pygame.mixer.Sound("assets/audio/victory_down.mp3")
 # Background Music
 def play_background_music():
     pygame.mixer.music.load("assets/audio/background_music.mp3")
+    pygame.mixer.music.set_volume(0.3)
     pygame.mixer.music.play(-1)  # Loop music
 
 def stop_background_music():
