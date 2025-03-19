@@ -14,6 +14,9 @@ class Character:
         self.screen_width = screen_width
         self.reset_screen = False
 
+        #INSERT DEATH IMAGE IN .LOAD()
+        self.death = pygame.transform.scale(pygame.image.load(image_paths["walk"]), (50, 50))
+
         # Load character images
         self.images = {
             "idle": pygame.transform.scale(pygame.image.load(image_paths["idle"]), (50, 50)),
@@ -115,3 +118,7 @@ class Character:
     #CALL THIS TO RESET ROOM STATUS, RIGHT AFTER DOING SO.
     def reset_screen (self):
         self.reset_screen = False
+
+    #CALL THIS TO DIE, forgor to add death image (above)
+    def die (self):
+        self.current_image = self.death
